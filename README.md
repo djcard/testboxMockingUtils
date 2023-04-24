@@ -31,12 +31,12 @@ Examples:
 
 function beforeAll(){
 super.beforeAll();
-variables.testboxMockingUtils = getInstance("mocking@testboxUtils");
+variables.testboxMockingUtils = getInstance("mocking@testboxMockingUtils");
 variables.testboxMockingUtils.storeOriginalMapping("path.to.model");
 }
 
 function afterAll(){
-variables.testBoxUtils.restoreMappings();
+variables.testboxMockingUtils.restoreMappings();
 }
 
 
@@ -46,9 +46,9 @@ title="Unit Testing",
 body=function(){
 beforeEach(function(){
 mockQB = createMock(object=getInstance("queryBuilder@"));
-variables.testBoxUtils.replaceMapping("queryBuilder@qb",mockQB);
+variables.testboxMockingUtils.replaceMapping("queryBuilder@qb",mockQB);
 mockModel = createMock(object=getInstance("path.to.model");
-variables.testBoxUtils.replaceMapping("path.to.model",mockModel);
+variables.testboxMockingUtils.replaceMapping("path.to.model",mockModel);
 });
 }
 );
