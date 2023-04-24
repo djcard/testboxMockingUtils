@@ -1,0 +1,61 @@
+{
+    "author":"Dan Card <dan@ortussolutions.com>",
+    "bugs":"https://github.com/djcard/testboxMockingUtils/issues",
+    "changelog":"",
+    "contributors":[],
+    "dependencies":{},
+    "description":"",
+    "devDependencies":{},
+    "documentation":"",
+    "homepage":"https://github.com/djcard/testboxMockingUtils",
+    "ignore":[
+        "**/.*",
+        "/test/",
+        "/tests/"
+    ],
+    "installPaths":{},
+    "instructions":"",
+    "keywords":[],
+    "license":[
+        {
+            "type":"MIT",
+            "URL":"https://github.com/djcard/testboxMockingUtils/blob/main/LICENSE"
+        }
+    ],
+    "location":"ForgeboxStorage",
+    "name":"Testbox Mocking Utils",
+    "private":false,
+    "projectURL":"https://github.com/djcard/testboxMockingUtils",
+    "reinitWatchDelay":500,
+    "reinitWatchDirectory":"",
+    "reinitWatchPaths":"",
+    "repository":{
+        "type":"github",
+        "URL":"https://github.com/djcard/testboxMockingUtils"
+    },
+    "scripts":{},
+    "shortDescription":"A collection of utilties to facilitate mocking during unit tests in a Coldbox Application",
+    "slug":"testboxMockingUtils",
+    "testbox":{
+        "bundles":"",
+        "directory":"tests.specs",
+        "excludes":"",
+        "labels":"",
+        "options":{},
+        "recurse":true,
+        "reporter":"",
+        "runner":[
+            {
+                "default":""
+            }
+        ],
+        "testBundles":"",
+        "testSpecs":"",
+        "testSuites":"",
+        "verbose":true,
+        "watchDelay":500,
+        "watchPaths":"**.cfc"
+    },
+    "type":"modules",
+    "version":"0.0.1"
+}
