@@ -24,6 +24,7 @@ There are six methods to help with mocking components in WireBox.
 `whileSwapped` accepts a structure with the name of mappings as the keys and the targets as the values as well as a
 callback. The method stores the original mapping from WireBox in the variables scope of the instantiated CFC, runs the callback, then restores the mappings.
 
+Thanks to Eric Peterson for the whileSwapped method and providing the foundational strategy for this module. 
 
 Examples:
 

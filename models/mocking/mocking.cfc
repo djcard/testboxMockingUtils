@@ -60,12 +60,14 @@ component {
      * @verifyMappingExists - whether or not the function should verify if the mapping exists in WireBox before trying to swap the mappings.
      **/
     function whileSwapped( struct mappings = {}, any callback, boolean verifyMappingExists = true ) {
-        var binder = getWireBox().getBinder();
+        var binder = variables.controller.getWireBox().getBinder();
         var originalMappings = {};
         mappings.each( function( mapping, componentCFC ) {
             if ( verifyMappingExists ) {
-                expect( binder.mappingExists( mapping ) ).toBeTrue( "No #mapping# already configured in WireBox" );
-            }
+							if(!binder.mappingExists( mapping )){
+								throw("No #mapping# already configured in WireBox" );
+								return;
+							}};
             originalMappings[ mapping ] = binder.getMapping( mapping );
             binder.map( alias = mapping, force = true ).toValue( componentCFC );
         } );
