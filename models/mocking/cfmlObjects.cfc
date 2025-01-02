@@ -15,9 +15,9 @@ component {
         clientFileName="",
         contentSubType="",
         contentType="",
-        dateLastAccessed=""
+        dateLastAccessed="",
         fileExisted="",
-        fileSize=""
+        fileSize="",
         fileWasAppended="",
         fileWasOverwritten="",
         fileWasRenamed="",
