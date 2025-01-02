@@ -1,17 +1,20 @@
 component {
 
     property name="controller" inject="coldbox";
+	property name="wirebox" inject="wirebox";
+	property name="mockBox" inject="testbox.system.mockbox";
     /***
-     * Helper method to simply a "clean" reload of a wirebox mapping from the file system
+     * Helper method to simply do a "clean" reload of a wirebox mapping from the file system
      **/
-    function reloadModule( required string moduleName ) {
+    boolean function reloadModule( required string moduleName ) {
         variables.controller.getServices().moduleService.reload( moduleName );
+		return true;
     }
 
     /**
      * Helper method to simplify replacing mappings in Wirebox, helpful in mocking in integration testing
      **/
-    function replaceMapping( required string mapping, required target ) {
+    boolean function replaceMapping( required string mapping, required target ) {
         variables.controller
             .getWireBox()
             .getBinder()
@@ -21,6 +24,8 @@ component {
             .getBinder()
             .map( mapping )
             .toValue( target );
+
+		return true;
     }
 
 
@@ -43,12 +48,15 @@ component {
      *
      **/
     function restoreMappings() {
-        variables.originalMappings.each( function( mapping, comp ) {
-            variables.controller
-                .getWireBox()
-                .getBinder()
-                .setMapping( mapping, comp );
-        } );
+		writeDump(variables.originalMappings);
+		if(!isNull(variables.originalMappings)){
+			variables.originalMappings.each( function( mapping, comp ) {
+				variables.controller
+					.getWireBox()
+					.getBinder()
+					.setMapping( mapping, comp );
+			} );
+		}
     }
 
     /***
@@ -91,4 +99,37 @@ component {
         variables.originalMappings = {};
     }
 
+	function compareKeysFromQuery(required string compName,required string funcName,struct args={},required string qbFunction, required string usedKeylist, getFromDB=0){
+		var receivedKeys = returnKeysFromQuery(compName,funcName,args,qbFunction,getFromDB);
+		return usedKeylist.listToArray().filter(function(item){
+			return !receivedKeys.findNoCase(item);
+		});
+	}
+
+	function returnKeysFromQuery(required string compName,required string funcName,struct args={},required string qbFunction, getFromDB=0 ){
+		var mq = mockBox.createMock(object=wirebox.getInstance("QueryBuilder@qb"));
+		mq.$(method=qbFunction,returns={});
+
+		var ma = wirebox.getInstance(compName);
+		ma.setQb(mq);
+		ma[funcName](argumentCollection = arguments.args);
+		var allColumns = [];
+
+		mq.getColumns().each(function(item){
+			if(isSimpleValue(item) && item != "*"){
+				allColumns.append(item);
+			} else if(!issimplevalue(item)){
+				return item.getSql().listToArray(", ",false, true)
+					.each(function(item){
+						allColumns.append(item.listLast(" ",false,true).listlast(".",false));
+				});
+			} else if(isSimpleValue(item) && item == "*"){
+				if(!getFromDB){
+					allColumns.append("I need to look in the DB");
+				}
+
+			}
+		});
+		return allColumns;
+	}
 }
